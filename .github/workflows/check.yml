@@ -1,0 +1,28 @@
+name: Check code on pull requests & subsequent pushes
+
+on:
+  pull_request:
+    branches:
+      - staging
+
+jobs:
+  tests:
+    name: tests
+    runs-on: ubuntu-20.04
+    env:
+      GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+    steps:
+      - uses: actions/checkout@v3
+      - uses: actions/setup-python@v4
+        with:
+          python-version-file: '.python-version' # Read python version from a file
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
+      - name: Test dataset tagger
+        run: python dataset_tagger/test_dataset_tagger.py
+      - name: Test pdf tagger
+        run: python pdf_tagger/test_pdf_tagger.py
+      - name: Test picture tagger
+        run: python picture_tagger/test_picture_tagger.py

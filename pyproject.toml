@@ -1,0 +1,13 @@
+[build-system]
+requires = ["setuptools"]
+build-backend = "setuptools.build_meta"
+
+# [project]
+# description = "A package to add metadta tags to objects saved in s3"
+# readme = "README.md"
+# requires-python = ">=3.7"
+# keywords = ["aws", "s3", "metadata"]
+# license = {text = "BSD 3-Clause License"}
+# classifiers = [
+#     "Programming Language :: Python :: 3",
+# ]

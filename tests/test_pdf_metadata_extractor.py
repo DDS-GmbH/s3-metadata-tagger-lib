@@ -6,8 +6,9 @@ import unittest
 
 from metadata_tagger.pdf_metadata_extractor import pdf_metadata_extractor
 
+RESOURCE_PATH = "tests/resources"
 
-class DatasetTests(unittest.TestCase):
+class PDFTests(unittest.TestCase):
     """
     Simple pdf metadata extractor tests
     """
@@ -17,7 +18,7 @@ class DatasetTests(unittest.TestCase):
         Check whether the number of pages in a pdf is determined correctly
         """
         self.assertEqual(
-            pdf_metadata_extractor.get_pages("metadata_tagger/pdf_metadata_extractor/resources/test/test.pdf")["pages"], "1")
+            pdf_metadata_extractor.get_pages(f"{RESOURCE_PATH}/test.pdf")["pages"], "1")
 
 
 if __name__ == '__main__':

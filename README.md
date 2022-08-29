@@ -1,34 +1,21 @@
 # AWS S3 Metadata Tagger
-The AWS S3 Metadata Tagger adds information to S3 objects.
-More specifically, it contains multiple scripts to determine file properties, which are then added as s3 metadata. (For the difference between `tags` and `metadata` see https://stackoverflow.com/a/42146207/4786733)
+The S3 Metadata tagger adds information in the form of metadata to files saved in S3.
 
-The currently included scripts retrieve:
-* image dimensions
-* number of pages of a pdf
-* encoding of a csv or xlsx file
+To do this, the central handler takes a file location and a metadata extracting function.
+It first checks whether the file already contains the requested information via a `HEAD` request.
+If it does not, it downloads the file, invokes extracting function, and adds the metadata to
+the s3 object with a inplace `COPY, MetadataDirective="REPLACE"` operation.
 
-They are invoked either via triggers configured on bucket, operation, and file suffix (see serverless.yml for the details) or via http endpoints.
-
-Since metadata tags can only be added on object creation (copies with `MetadataDirective="REPLACE"` in this case), there exists the danger of
-trigger loops, where each tagging operation causes a new invocation of the service.
-To avoid this, each object is additionally tagged with a `docu-tools-tags` tag.
-On each invocation, the service checks if the object has the above tag.
-If it does, the function invocation returns, and no further creation operation is done.
-If a tagging operation fails, it is retried three times before returning an exception.
+This package comes with two optional variants for metadata extraction:
+* PDF: for determining the number of pages in a pdf
+* PICTURE: for determining the dimension of an image
 
 ## Structure
-
-### `controller` 
+### `object_tagger` 
 contains the higher-level orchestration:
-* `endpoints.py` specifies the incoming endpoints, and transforms each request into a client-agnostic object, passing it to ->
-* `object_tagger.py`, which contains all the logic for checking whether the file has already been tagged, downloading it, invoking the metadata script, creating the tag object, and adding it to the s3 resource. 
+* `object_tagger.py` contains all the logic for checking whether the file has already been tagged, downloading it, invoking the metadata script, creating the tag object, and adding it to the s3 resource. 
 
 The metadata scripts are stored in their respective folders
-
-### `dataset_tagger`
-The dataset tagger checks whether a file is `.xlsx` or `.csv` (with `magic`/[python-magic](https://github.com/ahupp/python-magic)) and consequently determines the encoding
-* For `csv` files, [chardet](https://github.com/chardet/chardet) is used
-* For `xlsx` files, the `coreProps/core.xml` file is extracted, and there the `encoding` field is read
 
 ### `pdf_tagger`
 The pdf tagger uses [PyPDF2](https://pypdf2.readthedocs.io/en/latest/) to determine the amount of pages in a pdf

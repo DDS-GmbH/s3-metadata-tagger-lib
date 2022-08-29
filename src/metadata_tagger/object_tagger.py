@@ -15,7 +15,8 @@ from botocore.exceptions import ClientError
 from mypy_boto3_s3.type_defs import HeadObjectOutputTypeDef
 
 if os.environ.get('LOCALSTACK_S3_ENDPOINT_URL'):
-    s3_client = boto3.client("s3", endpoint_url = os.environ.get('LOCALSTACK_S3_ENDPOINT_URL'))
+    s3_client = boto3.client(
+        "s3", endpoint_url=os.environ.get('LOCALSTACK_S3_ENDPOINT_URL'))
 else:
     s3_client = boto3.client("s3")
 
@@ -23,8 +24,8 @@ else:
 S3ObjectPath = namedtuple('S3ObjectPath', ['key', 'bucket'])
 
 MetadataHandler = namedtuple('MetadataHandler', [
-                          'already_tagged', 'extraction_function', 'versioning_tag'],
-                          defaults=[{}])
+    'already_tagged', 'extraction_function', 'versioning_tags'],
+    defaults=[{}])
 
 
 def tag_file(object_path: S3ObjectPath,
@@ -47,7 +48,7 @@ def tag_file(object_path: S3ObjectPath,
         with _download_file(object_path) as downloaded_file:
             custom_tags = metadata_handler.extraction_function(
                 downloaded_file.name)
-            metadata_tags = object_info["Metadata"] | custom_tags | metadata_handler.versioning_tag
+            metadata_tags = object_info["Metadata"] | custom_tags | metadata_handler.versioning_tags
             result = _tag_remote_file(
                 object_path, metadata_tags, object_info["ETag"])
             retries = retries + 1
@@ -56,7 +57,8 @@ def tag_file(object_path: S3ObjectPath,
 
 
 def _get_object_info(object_path: S3ObjectPath) -> HeadObjectOutputTypeDef:
-    logging.info("checking whether %s in %s is already tagged", object_path.key, object_path.bucket)
+    logging.info("checking whether %s in %s is already tagged",
+                 object_path.key, object_path.bucket)
     return s3_client.head_object(Bucket=object_path.bucket, Key=object_path.key)
 
 

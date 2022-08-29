@@ -4,6 +4,7 @@ on:
   pull_request:
     branches:
       - staging
+      - production
 
 jobs:
   tests:
@@ -25,5 +26,26 @@ jobs:
           pip install pylint
       - name: lint
         run: pylint ./src
+      - name: Start LocalStack
+        env:
+          LOCALSTACK_S3_ENDPOINT_URL: http://localhost:4566
+          AWS_ACCESS_KEY_ID: test
+          AWS_SECRET_ACCESS_KEY: test
+        run: |
+          # install LocalStack cli and awslocal
+          pip install localstack awscli-local
+          # Make sure to pull the latest version of the image
+          docker pull localstack/localstack
+          # Start LocalStack in the background
+          localstack start -d
+          # Wait 30 seconds for the LocalStack container to become ready before timing out
+          echo "Waiting for LocalStack startup..."
+          localstack wait -t 30
+          echo "Startup complete"       
+          awslocal s3 mb s3://testbucket   
       - name: Test
+        env:
+          LOCALSTACK_S3_ENDPOINT_URL: http://localhost:4566
+          AWS_ACCESS_KEY_ID: test
+          AWS_SECRET_ACCESS_KEY: test
         run: python -m unittest discover -s tests

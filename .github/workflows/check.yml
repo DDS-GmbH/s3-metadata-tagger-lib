@@ -15,14 +15,13 @@ jobs:
       - uses: actions/checkout@v3
       - uses: actions/setup-python@v4
         with:
-          python-version-file: '.python-version' # Read python version from a file
+          python-version-file: '.python-version'
       - name: Install dependencies
         run: |
           python -m pip install --upgrade pip
-          if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
-      - name: Test dataset tagger
-        run: python dataset_tagger/test_dataset_tagger.py
-      - name: Test pdf tagger
-        run: python pdf_tagger/test_pdf_tagger.py
-      - name: Test picture tagger
-        run: python picture_tagger/test_picture_tagger.py
+          pip install -e .
+          pip install unittest pylint
+      - name: lint
+        run: pylint ./src
+      - name: Test
+        run: python -m unittest discover -s tests

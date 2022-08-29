@@ -3,7 +3,7 @@ requires = ["setuptools"]
 build-backend = "setuptools.build_meta"
 
 [project]
-name = "metadata-tagger"
+name = "s3-metadata-tagger"
 version = "0.0.3"
 description = "A package to add metadata tags to objects saved in s3"
 readme = "README.md"

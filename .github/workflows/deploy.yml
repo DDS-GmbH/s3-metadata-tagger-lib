@@ -1,4 +1,4 @@
-name: Deploy new versions of staging and production
+name: Publish Python 🐍 distributions 📦 to PyPI and TestPyPI
 
 on:
   push:
@@ -7,8 +7,8 @@ on:
       - production
 
 jobs:
-  deploy:
-    name: deploy
+  publish:
+    name: Build and publish Python 🐍 distributions 📦 to PyPI and TestPyPI
     runs-on: ubuntu-20.04
     env:
       GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
@@ -17,11 +17,29 @@ jobs:
       - uses: actions/setup-python@v4
         with:
           python-version-file: '.python-version'
-      - uses: actions/setup-node@v3
+          cache: 'pip'
+          cache-dependency-path: '**/setup.cfg'
+      - name: Install pypa/build
+        run: >-
+          python -m
+          pip install
+          build
+          --user
+      - name: Build a binary wheel and a source tarball
+        run: >-
+          python -m
+          build
+          --sdist
+          --wheel 
+          --outdir dist/
+      - name: Publish distribution 📦 to Test PyPI
+        if: github.ref_name == 'staging'
+        uses: pypa/gh-action-pypi-publish@release/v1
         with:
-          node-version-file: '.nvmrc'
-      - run: npm i -g serverless && npm ci
-      - name: Deploy
-        run: serverless deploy --stage ${{ github.ref_name }} --verbose
-        env:
-          SERVERLESS_ACCESS_KEY: ${{ secrets.SERVERLESS_ACCESS_KEY }}
+          password: ${{ secrets.TEST_PYPI_API_TOKEN }}
+          repository_url: https://test.pypi.org/legacy/
+      - name: Publish distribution 📦 to PyPI
+        if: github.ref_name == 'production'
+        uses: pypa/gh-action-pypi-publish@release/v1
+        with:
+          password: ${{ secrets.PYPI_API_TOKEN }}

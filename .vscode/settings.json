@@ -3,5 +3,8 @@
     "python.linting.pylintEnabled": true,
     "python.analysis.extraPaths": [
         "./src"
-    ]
+    ],
+    "yaml.schemas": {
+        "https://json.schemastore.org/github-workflow.json": "file://.github/workflows/deploy.yml"
+    }
 }

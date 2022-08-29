@@ -31,6 +31,7 @@ class ObjectTaggerTest(unittest.TestCase):
 
     def setUp(self) -> None:
         logging.basicConfig(level=logging.INFO)
+        s3_client.create_bucket(Bucket=BUCKET)
         s3_client.upload_file(
             f"{RESOURCE_PATH}/{FILE_NAME}", BUCKET, FILE_NAME)
 

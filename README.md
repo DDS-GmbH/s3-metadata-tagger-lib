@@ -24,3 +24,14 @@ Install with the `[pdf]` extra option.
 ### `picture_tagger`
 Using [Pillow](https://python-pillow.org/), the script gets the `width` and `height` of the passed image.
 Install with the `[picture]` extra option.
+
+## Testing
+Both `pdf_tagger` and `picture_tagger` come with unittests.
+There is also an integration test in `tests/test_object_tagger.py`, which expects
+a [localstack](https://github.com/localstack/localstack) instance to run in the background.
+Furthermore, the following environment variables need to be set:
+```bash
+LOCALSTACK_S3_ENDPOINT_URL=http://localhost:4566
+AWS_ACCESS_KEY_ID=test
+AWS_SECRET_ACCESS_KEY=test
+```

@@ -18,7 +18,9 @@ contains the higher-level orchestration:
 The metadata scripts are stored in their respective folders
 
 ### `pdf_tagger`
-The pdf tagger uses [PyPDF2](https://pypdf2.readthedocs.io/en/latest/) to determine the amount of pages in a pdf
+The pdf tagger uses [PyPDF2](https://pypdf2.readthedocs.io/en/latest/) to determine the amount of pages in a pdf.
+Install with the `[pdf]` extra option.
 
 ### `picture_tagger`
-Using [Pillow](https://python-pillow.org/), the script gets the `width` and `height` of the passed image
+Using [Pillow](https://python-pillow.org/), the script gets the `width` and `height` of the passed image.
+Install with the `[picture]` extra option.

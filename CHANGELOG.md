@@ -1,6 +1,6 @@
 # Changelog
 
-## Unreleased
+## 0.1.0 - 29.08.2022
 ### Added
 * Add function to `tag_object` arguments to allow dynamic decision on whether an object should be tagged
 * Add dictionary to `tag_object` arguments to allow adding static tags

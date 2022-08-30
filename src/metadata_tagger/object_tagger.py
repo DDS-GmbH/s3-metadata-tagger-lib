@@ -52,7 +52,8 @@ def tag_file(object_path: S3ObjectPath,
             result = _tag_remote_file(
                 object_path, metadata_tags, object_info["ETag"])
             retries = retries + 1
-            return custom_tags
+            if result:
+                return custom_tags
     raise RuntimeError("Could not tag file succesfully")
 
 

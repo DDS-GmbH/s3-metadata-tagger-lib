@@ -1,0 +1,5 @@
+format: template
+template: "@/contrib/html.tpl"
+exit-code: 1
+severity: CRITICAL,HIGH
+output: trivy-results.html

@@ -114,6 +114,29 @@ jobs:
             --failOnCVSS 6
       - name: Upload Test results
         uses: actions/upload-artifact@master
+        if: always()
         with:
-           name: Depcheck report
-           path: ${{github.workspace}}/reports
+          name: dependency-check-results
+          path: ${{github.workspace}}/reports
+          retention-days: 5
+  trivy-check:
+    name: run trivy vulnerability scanner
+    runs-on: ubuntu-20.04
+    env:
+      GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+      - name: Run Trivy vulnerability scanner in fs mode
+        uses: aquasecurity/trivy-action@master
+        with:
+          scan-type: 'fs'
+          scan-ref: '.'
+          trivy-config: trivy.yaml
+      - name: Archive trivy results
+        uses: actions/upload-artifact@v3
+        if: always()
+        with:
+          name: trivy-results
+          path: trivy-results.html
+          retention-days: 5

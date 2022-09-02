@@ -43,8 +43,8 @@ jobs:
         uses: pypa/gh-action-pypi-publish@release/v1
         with:
           password: ${{ secrets.PYPI_API_TOKEN }}
-  lint_and_scan:
-    name: run linting and sonarqube scan
+  scan:
+    name: run the sonarqube scan
     runs-on: ubuntu-20.04
     env:
       GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

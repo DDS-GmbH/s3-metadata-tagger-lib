@@ -54,7 +54,9 @@ The classes are as follows:
 | fix/       | A bug is fixed.                                                           | `Null Pointer Exception` when resolving the same placeholder two times |
 | refactor/  | We change some existing implementation for stability/performance reasons. | Use Enum-based `switch-case` for resolving in the `ReflectionResolver` |
 | polishing/ | Collection branch of smaller refactoring.                                 | Switch to `instanceof` pattern matching                                |
-| cicd/      | Issues related to CI/CD.                                                  | Add testing coverage to sonarqube                                      |
+| cicd/      | Changes are done to the CI/CD pipeline.                                   | Add testing coverage to sonarqube                                      |
+| doc/       | Documentation is added or changed .                                       | Clarify examples                                                       |
+
 
 ### Commits
 Please try to group commits so that each commit bundles a set of
@@ -76,6 +78,7 @@ If you already have some path of action in mind you can also open a
  `WIP:` pull request directly.
 
 ### Pull requests
+Pull requests should be done to the `staging` branch.
 When opening a pull request, please give it a meaningful name and
 description.
 Either link to the corresponding issue or describe the problem in the
@@ -86,10 +89,28 @@ Each PR needs to confirm to the linting and sonarqube requirements, and should a
 Please also add appropriate logging, so that issues further down the roead can be triaged faster.
 If any issues arise with trivy or owasp, please check back with the project maintainers.
 
+## Versioning and Release Policy
+The S3 metadata tagger follows the [Semantic Versioning](https://semver.org/) versioning scheme.
+In short, the version is given as `x.y.z`
+* Bug fixes, which do not change anything about the interface and introduce no new features increase `z`
+* Versions containing new features, which do not influence the existing interfaces increase the `y`
+* Releases introducing breaking changes increase the `z`.
+
+There is no fixed release schedule, new versions are released whenever a contained set of changes can be deployed.
+Each new version is first deployed on the `staging` branch, which releases a new package version to 
+[test.pypi.org](https://test.pypi.org/).
+After successful testing, the`staging` branch is merged into the `production` branch, which pushes the package to
+[pypi.org](https://pypi.org/).
+
+The releases to [test.pypi.org](https://test.pypi.org/) and [pypi.org](https://pypi.org/) are done via github 
+actions (see [deploy.yml](.github/workflows/deploy.yml)).
+
+## Dependabot
+Dependabot is enabled for this repository to keep the github actions and the python dependencies up-to-date.
+
 ## Maintainers
 * [@alexpartsch](https://github.com/alexpartsch)
 * [@AntonOellerer](https://github.com/AntonOellerer)
-
 
 ## Further links
 * The projects [README.md](README.md)

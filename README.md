@@ -22,6 +22,8 @@ The parameters of the `MetadataHandler` are as follows:
 The function tries to extract the metadata and add it to the object for up to three times.
 On success, the added metadata is returned, upon failure an exception is thrown.
 
+For an example, see the service utilizing this library for automatically tagging pdfs uploaded to s3 via aws lambda [in the examples directory](./examples/serverless-triggered).
+
 ## Structure
 ### `object_tagger` 
 contains the higher-level orchestration:

@@ -1,0 +1,51 @@
+service: serverless-triggered-example
+
+frameworkVersion: "3"
+configValidationMode: error
+
+provider:
+  name: aws
+  runtime: python3.9
+  stage: ${opt:stage,'local'}
+  environment:
+    LOCALSTACK_S3_ENDPOINT_URL: ${param:aws_url}
+
+functions:
+  tagPdfIssueFile:
+    handler: handler.handle_pdf_creation
+    events:
+      - s3:
+          bucket: ${param:media-bucket}
+          event: s3:ObjectCreated:Put
+          rules:
+            - suffix: .pdf
+    iamRoleStatements:
+      - Effect: "Allow"
+        Action:
+          - "s3:GetObject"
+          - "s3:GetObjectAttributes"
+          - "s3:PutObject"
+        Resource: "arn:aws:s3:::${param:media-bucket}/*"
+
+plugins:
+  - serverless-plugin-custom-roles
+  - serverless-python-requirements
+  - serverless-localstack
+
+params:
+  local:
+    aws_url: http://localhost:4566
+
+custom:
+  pythonRequirements:
+    dockerizePip: non-linux
+  localstack:
+    stages:
+      - local
+    debug: true
+
+package:
+  patterns:
+    - "!node_modules/**"
+    - "!.venv/**"
+    - "!__pycache__/**"

@@ -1,0 +1,2 @@
+s3-metadata-tagger[pdf]
+aws-lambda-typing

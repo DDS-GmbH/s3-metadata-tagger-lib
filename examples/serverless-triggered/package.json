@@ -1,0 +1,27 @@
+{
+  "name": "serverless-triggered-example",
+  "version": "1.0.0",
+  "description": "A package demonstrating the s3 metadata tagger library by creating a service which receives tagging jobs via S3 triggers.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/DDS-GmbH/s3-metadata-tagger-lib.git"
+  },
+  "author": "Anton Oellerer",
+  "license": "SEE LICENSE IN LICENSE",
+  "bugs": {
+    "url": "https://github.com/DDS-GmbH/s3-metadata-tagger-lib/issues"
+  },
+  "homepage": "https://github.com/DDS-GmbH/s3-metadata-tagger-lib",
+  "dependencies": {
+    "serverless": "^3.22.0",
+    "serverless-plugin-custom-roles": "^3.0.0",
+    "serverless-python-requirements": "^5.4.0"
+  },
+  "devDependencies": {
+    "serverless-localstack": "^1.0.0"
+  }
+}

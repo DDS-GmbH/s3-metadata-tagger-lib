@@ -9,7 +9,7 @@ from typing import Dict
 import localstack_client.session as boto3
 
 from metadata_tagger.object_tagger import S3ObjectPath, MetadataHandler, tag_file
-from metadata_tagger.pdf_metadata_extractor import pdf_metadata_extractor
+from metadata_tagger.extractors import pdf_metadata_extractor
 
 RESOURCE_PATH = "tests/resources"
 FILE_NAME = "test.pdf"

@@ -4,9 +4,10 @@ The tests for the picture metadata extractor
 
 import unittest
 
-from metadata_tagger.picture_metadata_extractor import picture_metadata_extractor
+from metadata_tagger.extractors import picture_metadata_extractor
 
 RESOURCE_PATH = "tests/resources"
+
 
 class DatasetTests(unittest.TestCase):
     """

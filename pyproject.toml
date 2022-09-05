@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "s3-metadata-tagger"
-version = "0.0.3"
+version = "0.2.0"
 description = "A package to add metadata tags to objects saved in s3"
 readme = "README.md"
 requires-python = ">=3.7"
@@ -20,6 +20,20 @@ classifiers = [
     "Operating System :: POSIX :: Linux",
     "Topic :: Multimedia",
 ]
+dependencies = [
+    "autopep8",
+    "boto3",
+    "boto3-stubs",
+    "botocore",
+    "botocore-stubs",
+    "mypy-boto3-s3",
+    "pycodestyle",
+    "typing_extensions",
+]
+
+[project.optional-dependencies]
+pdf = ["PyPDF2"]
+picture = ["Pillow", "types-Pillow"]
 
 [project.urls]
 "Homepage" = "https://github.com/DDS-GmbH/metadata-tagger-lib"

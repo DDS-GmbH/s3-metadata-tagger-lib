@@ -4,9 +4,10 @@ The tests for the dataset metadata extractor
 
 import unittest
 
-from metadata_tagger.pdf_metadata_extractor import pdf_metadata_extractor
+from metadata_tagger.extractors import pdf_metadata_extractor
 
 RESOURCE_PATH = "tests/resources"
+
 
 class PDFTests(unittest.TestCase):
     """

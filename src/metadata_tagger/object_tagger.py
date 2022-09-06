@@ -3,12 +3,11 @@ The object tagger is responsible for checking whether a file
 has to be tagged, fetching it, and passing it to a supplied tagging
 function
 """
-from collections import namedtuple
 from contextlib import contextmanager
 import tempfile
 import logging
 import os
-from typing import Dict, Generator
+from typing import Callable, Dict, Generator, NamedTuple
 
 import boto3
 from botocore.exceptions import ClientError
@@ -21,11 +20,27 @@ else:
     s3_client = boto3.client("s3")
 
 
-S3ObjectPath = namedtuple('S3ObjectPath', ['key', 'bucket'])
+class S3ObjectPath(NamedTuple):
+    """
+    An object representing the location of an S3 object
+    """
+    key: str
+    bucket: str
 
-MetadataHandler = namedtuple('MetadataHandler', [
-    'already_tagged', 'extraction_function', 'versioning_tags'],
-    defaults=[{}])
+
+class MetadataHandler(NamedTuple):
+    """
+    The object containing the function for handling the actual metadata tagging of
+    an S3 object.
+    `already_tagged` is a function which determines
+        whether a selected object has already been tagged.
+    `extraction_function` is the function extracting the metadata from the passed object.
+    `versioning_tags` is a dictionary of additional tags which are put onto the object.
+        It can e.g. be used for tag versioning.
+    """
+    already_tagged: Callable[[Dict[str, str]], bool]
+    extraction_function: Callable[[str], Dict[str, str]]
+    versioning_tags: Dict[str, str] = {}
 
 
 def tag_file(object_path: S3ObjectPath,

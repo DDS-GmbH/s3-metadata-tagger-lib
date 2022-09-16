@@ -42,7 +42,6 @@ custom:
   localstack:
     stages:
       - local
-    debug: true
 
 package:
   patterns:

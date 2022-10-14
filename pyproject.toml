@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "s3-metadata-tagger"
-version = "1.0.0"
+version = "1.0.1"
 description = "A package to add metadata tags to objects saved in s3"
 readme = "README.md"
 requires-python = ">=3.7"
@@ -36,8 +36,8 @@ pdf = ["PyPDF2"]
 picture = ["Pillow", "types-Pillow"]
 
 [project.urls]
-"Homepage" = "https://github.com/DDS-GmbH/metadata-tagger-lib"
-"Bug Tracker" = "https://github.com/DDS-GmbH/metadata-tagger-lib/issues"
+"Homepage" = "https://github.com/DDS-GmbH/s3-metadata-tagger-lib/"
+"Bug Tracker" = "https://github.com/DDS-GmbH/s3-metadata-tagger-lib/issues"
 
 [tool.setuptools.packages.find]
 where = ["src"]

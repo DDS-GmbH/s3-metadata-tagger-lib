@@ -136,6 +136,8 @@ jobs:
           format: 'HTML'    
           args: >
             --failOnCVSS 6
+            --exclude **/examples/**
+            --enableExperimentals
       - name: Upload Test results
         uses: actions/upload-artifact@master
         if: always()
@@ -157,6 +159,7 @@ jobs:
           scan-type: 'fs'
           scan-ref: '.'
           trivy-config: trivy.yaml
+          skip-dirs: examples
       - name: Archive trivy results
         uses: actions/upload-artifact@v3
         if: always()

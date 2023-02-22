@@ -98,6 +98,7 @@ jobs:
       - name: Create coverage report
         run: python -m coverage xml
       - name: SonarQube Scan
+        if: ${{ github.actor != 'dependabot[bot]' }}
         uses: kitabisa/sonarqube-action@v1.2.0
         with:
           host: ${{ secrets.SONAR_HOST }}

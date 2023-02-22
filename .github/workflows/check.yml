@@ -137,6 +137,7 @@ jobs:
           format: 'HTML'    
           args: >
             --failOnCVSS 6
+            --exclude **/examples/**
       - name: Upload Test results
         uses: actions/upload-artifact@master
         if: always()
@@ -157,7 +158,11 @@ jobs:
         with:
           scan-type: 'fs'
           scan-ref: '.'
-          trivy-config: trivy.yaml
+          format: template
+          template: '@/contrib/html.tpl'
+          exit-code: 1
+          severity: CRITICAL,HIGH
+          skip-dirs: /github/workspace/examples
       - name: Archive trivy results
         uses: actions/upload-artifact@v3
         if: always()

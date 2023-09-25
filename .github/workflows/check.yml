@@ -99,7 +99,7 @@ jobs:
         run: python -m coverage xml
       - name: SonarQube Scan
         if: ${{ github.actor != 'dependabot[bot]' }}
-        uses: kitabisa/sonarqube-action@v1.2.0
+        uses: kitabisa/sonarqube-action@v1.2.1
         with:
           host: ${{ secrets.SONAR_HOST }}
           login: ${{ secrets.SONAR_TOKEN }}

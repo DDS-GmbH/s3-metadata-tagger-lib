@@ -65,7 +65,7 @@ jobs:
       - name: lint
         run: pylint --output=lint-report.txt --output-format=parseable ./src
       - name: SonarQube Scan
-        uses: kitabisa/sonarqube-action@v1.2.0
+        uses: kitabisa/sonarqube-action@v1.2.1
         with:
           host: ${{ secrets.SONAR_HOST }}
           login: ${{ secrets.SONAR_TOKEN }}

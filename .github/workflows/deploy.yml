@@ -71,7 +71,7 @@ jobs:
           login: ${{ secrets.SONAR_TOKEN }}
           projectKey: ${{ secrets.SONAR_PROJECTKEY }}
       - name: Archive lint results
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         if: always()
         with:
           name: lint-results

@@ -46,7 +46,7 @@ jobs:
           AWS_SECRET_ACCESS_KEY: test
         run: python -m unittest discover -s tests 2>&1 | tee test-report.txt
       - name: Archive test results
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         if: always()
         with:
           name: test-results
@@ -105,7 +105,7 @@ jobs:
           login: ${{ secrets.SONAR_TOKEN }}
           projectKey: ${{ secrets.SONAR_PROJECTKEY }}
       - name: Archive lint results
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         if: always()
         with:
           name: lint-results
@@ -164,7 +164,7 @@ jobs:
           severity: CRITICAL,HIGH
           skip-dirs: /github/workspace/examples
       - name: Archive trivy results
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         if: always()
         with:
           name: trivy-results
